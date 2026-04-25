@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Risk Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="blob-bg"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">▲</span> Antigravity AI
+            </div>
+            <h1>Analyseur de Financement</h1>
+            <p>Obtenez une évaluation de crédit automatisée en propulsant vos bilans à travers notre Agent IA hyper-analytique.</p>
+        </header>
+
+        <main class="grid-layout">
+            <!-- Panneau d'upload -->
+            <section class="card upload-section glass">
+                <h2>1. Soumettre le Dossier</h2>
+                <form id="upload-form" class="upload-form">
+                    <div class="form-group">
+                        <label for="companyName">Nom de l'entreprise étudiée</label>
+                        <input type="text" id="companyName" name="company_name" placeholder="Ex: TechNova Inc." required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="financialDoc">Comptes annuels (PDF / Excel)</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="financialDoc" name="document" accept=".pdf,.csv,.xlsx" />
+                            <div class="file-upload-visual">
+                                <span>📄 Glisser-déposer un document ou cliquer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" id="analyzeBtn">
+                        <span class="btn-text">Lancer l'Analyse Agentique</span>
+                        <div class="loader hidden"></div>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Diagnostic de l'Agent -->
+            <section class="card results-section glass">
+                <h2>2. Diagnostic Crédit (IA)</h2>
+                <div id="results-placeholder" class="placeholder-state">
+                    <p>En attente d'un dossier à analyser par l'IA...</p>
+                </div>
+                
+                <div id="results-content" class="hidden">
+                    <div class="score-header">
+                        <div class="score-circle">
+                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                <path class="circle-bg"
+                                    d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                />
+                                <path class="circle" id="score-circle-path"
+                                    stroke-dasharray="0, 100"
+                                    d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                />
+                            </svg>
+                            <div class="score-text">
+                                <span id="risk-score">0</span>
+                                <span class="score-label">Score Risque</span>
+                            </div>
+                        </div>
+                        <div class="risk-level-badge" id="risk-level">Niveau</div>
+                    </div>
+                    
+                    <div class="agent-insight">
+                        <h3>Rapport Synthétique de l'Agent</h3>
+                        <p id="agent-summary"></p>
+                    </div>
+
+                    <div class="ratios-grid" id="ratios-grid">
+                        <!-- Liste des ratios -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Interface Chatbot -->
+    <div class="chat-widget">
+        <div class="chat-header">
+            <span>Ask the AI Analyst</span>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="message ai">Bonjour, je suis l'Agent Virtuel certifié en analyse de risques. Que souhaitez-vous examiner en détail ?</div>
+        </div>
+        <form class="chat-input" id="chat-form">
+            <input type="text" id="chat-message" placeholder="Question sur les bilans..." autocomplete="off">
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
