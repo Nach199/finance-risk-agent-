@@ -52,7 +52,7 @@ class FinancialAgent:
 
     def _get_chain(self, api_key: str):
         llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash", 
+            model="gemini-1.0-pro", 
             temperature=0.1, 
             google_api_key=api_key
         )
@@ -106,7 +106,7 @@ class FinancialAgent:
         
         try:
             llm = ChatGoogleGenerativeAI(
-                model="gemini-1.5-flash", 
+                model="gemini-1.0-pro", 
                 temperature=0.1, 
                 google_api_key=actual_key
             )
