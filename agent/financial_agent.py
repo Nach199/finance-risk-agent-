@@ -47,8 +47,8 @@ class FinancialAgent:
         ])
 
     def _get_api_key(self, user_provided_key: str) -> str:
-        # Clé codée en dur pour garantir la stabilité de la présentation
-        return "AIzaSyCN1aG-cleBdbjI2FxMEo5WrDmFaWIeV7A"
+        # On priorise la clé fournie par l'utilisateur depuis l'interface web
+        return user_provided_key or os.getenv("GEMINI_API_KEY")
 
     def _get_chain(self, api_key: str):
         llm = ChatGoogleGenerativeAI(
