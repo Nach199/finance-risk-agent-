@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const apiInput = document.getElementById('api-key-input');
+    const savedKey = localStorage.getItem('gemini_api_key');
+    if (savedKey) apiInput.value = savedKey;
+    apiInput.addEventListener('input', (e) => localStorage.setItem('gemini_api_key', e.target.value));
+
     const uploadForm = document.getElementById('upload-form');
     const analyzeBtn = document.getElementById('analyzeBtn');
     const btnText = analyzeBtn.querySelector('.btn-text');
@@ -9,6 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const fileInput = document.getElementById('financialDoc');
     const fileVisual = document.querySelector('.file-upload-visual span');
+    
+    // Ajout de la logique pour minimiser le chatbot
+    const chatHeader = document.getElementById('chat-header');
+    const chatWidget = document.getElementById('chat-widget');
+    const chatToggle = document.getElementById('chat-toggle');
+    
+    chatHeader.addEventListener('click', () => {
+        chatWidget.classList.toggle('collapsed');
+        // Change l'icone de la flèche
+        if (chatWidget.classList.contains('collapsed')) {
+            chatToggle.textContent = '▲';
+        } else {
+            chatToggle.textContent = '▼';
+        }
+    });
     
     fileInput.addEventListener('change', (e) => {
         if (e.target.files.length > 0) {
@@ -95,7 +115,13 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.appendChild(card);
         }
         
-        addChatMessage(`Je viens de terminer l'analyse de ${data.company}. Avez-vous des questions supplémentaires ?`, 'ai');
+        // Auto-open chatbot when results are rendered
+        if(chatWidget.classList.contains('collapsed')) {
+            chatWidget.classList.remove('collapsed');
+            chatToggle.textContent = '▼';
+        }
+        
+        addChatMessage(`Je viens de terminer l'analyse financière. Avez-vous des questions supplémentaires ?`, 'ai');
     }
 
     const chatForm = document.getElementById('chat-form');
@@ -115,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const formData = new FormData();
         formData.append('message', msg);
+        formData.append('api_key', document.getElementById('api-key-input').value);
         
         try {
             const response = await fetch('/api/chat', { method: 'POST', body: formData });
@@ -123,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addChatMessage(data.reply, 'ai');
         } catch (error) {
             document.getElementById(typingId).remove();
-            addChatMessage("Désolé, problème de connexion.", 'ai');
+            addChatMessage("Désolé, problème de connexion au serveur IA.", 'ai');
         }
     });
 
